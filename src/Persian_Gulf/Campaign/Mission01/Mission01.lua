@@ -2,6 +2,9 @@
 --GCICAP_Red:SetDefaultTakeoffFromRunway()
 --GCICAP_Red:SetDefaultLandingAtRunway()
 --GCICAP_Red:SetTacticalDisplay( true )
+
+
+
 ---
 -- adding our EWR group to the detection group
 DetectionSetGroup = SET_GROUP:New()
@@ -29,7 +32,7 @@ Red_A2ADDispatcher:SetBorderZone(Red_BorderZone)
 Red_A2ADDispatcher:SetEngageRadius(100000)
 
 --Squadrons
-Red_A2ADDispatcher:SetSquadron("Bandar AbbasSQ","Bandar Abbas Intl",{"Red Squadron Bandar Abbas"},4)
+Red_A2ADDispatcher:SetSquadron("Bandar AbbasSQ","Bandar Abbas Intl",{"Red Squadron Bandar Abbas"},6)
 Red_A2ADDispatcher:SetSquadronOverhead("Bandar AbbasSQ",1)
 Red_A2ADDispatcher:SetSquadronGrouping("Bandar AbbasSQ",2)
 Red_A2ADDispatcher:SetSquadronTakeoffFromRunway("Bandar AbbasSQ")
@@ -37,5 +40,7 @@ Red_A2ADDispatcher:SetSquadronLandingAtRunway("Bandar AbbasSQ")
 
 -- CAP zones
 CAPZoneSouth = ZONE_POLYGON:NewFromGroupName("Bandar Abbas CAP",GROUP:FindByName("Bandar Abbas CAP"))
-Red_A2ADDispatcher:SetSquadronCap("Bandar AbbasSQ",CAPZoneSouth,7000,8000,600,700,800,1200,"BARO")
+Red_A2ADDispatcher:SetSquadronCap("Bandar AbbasSQ",CAPZoneSouth,7620,7620,750,950,950,1800,"BARO")
 Red_A2ADDispatcher:SetSquadronCapInterval("Bandar AbbasSQ",1,30,30,1)
+
+
