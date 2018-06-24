@@ -17,7 +17,7 @@ Detection = DETECTION_AREAS:New(DetectionSetGroup,30000)
 Red_A2ADDispatcher = AI_A2A_DISPATCHER:New(Detection)
 
 -- enableing the tactical display for debugging
-Red_A2ADDispatcher:SetTacticalDisplay( false )
+Red_A2ADDispatcher:SetTacticalDisplay( true )
 
 -- Iran's border zone
 Red_BorderZone = ZONE_POLYGON:NewFromGroupName("Red Border",GROUP:FindByName("Red Border"))
@@ -32,7 +32,7 @@ Red_A2ADDispatcher:SetBorderZone(Red_BorderZone)
 Red_A2ADDispatcher:SetEngageRadius(100000)
 
 --Squadrons
-Red_A2ADDispatcher:SetSquadron("Bandar AbbasSQ","Bandar Abbas Intl",{"Red Squadron Bandar Abbas"},6)
+Red_A2ADDispatcher:SetSquadron("Bandar AbbasSQ","Bandar Abbas Intl",{"Red Squadron Bandar Abbas"},2)
 Red_A2ADDispatcher:SetSquadronOverhead("Bandar AbbasSQ",1)
 Red_A2ADDispatcher:SetSquadronGrouping("Bandar AbbasSQ",2)
 Red_A2ADDispatcher:SetSquadronTakeoffFromRunway("Bandar AbbasSQ")
