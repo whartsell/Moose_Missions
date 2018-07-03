@@ -12,7 +12,7 @@ Detection = DETECTION_AREAS:New(DetectionSetGroup,30000)
 Red_A2ADDispatcher = AI_A2A_DISPATCHER:New(Detection)
 
 -- enable the tactical display for debugging
-Red_A2ADDispatcher:SetTacticalDisplay( true )
+Red_A2ADDispatcher:SetTacticalDisplay( false )
 
 -- Iran's border zone
 Red_BorderZone = ZONE_POLYGON:NewFromGroupName("Red Border",GROUP:FindByName("Red Border"))
@@ -41,4 +41,17 @@ Red_A2ADDispatcher:SetSquadronCap("Bandar AbbasSQ",CAPZoneSouth,7620,7620,750,95
 Red_A2ADDispatcher:SetSquadronCapInterval("Bandar AbbasSQ",1,300,600,1)
 
 
+--Test stuff here
 
+CC = COMMANDCENTER:New(GROUP:FindByName("FFG-58"),"FFG-58")
+
+NavalSetGroup = SET_GROUP:New():FilterPrefixes( "FFG-58" ):FilterStart()
+NavalDetection = DETECTION_UNITS:New( NavalSetGroup )
+NavalDetection:SetRefreshTimeInterval(5)
+NavalDetection:Start()
+function NavalDetection:OnAfterDetect(From,Event,To)
+
+  local DetectionReport = NavalDetection:DetectedReportDetailed()
+  --local DetectionReport = NavalDetection:DetectedItemReportSummary()
+  CC:GetPositionable():MessageToAll( DetectionReport, 15, "" )
+end
