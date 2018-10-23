@@ -1,0 +1,33 @@
+
+
+---
+-- adding our EWR and SAM groups to the detection group
+DetectionSetGroup = SET_GROUP:New()
+DetectionSetGroup:FilterPrefixes({"EWR Red", "SAM Red"})
+DetectionSetGroup:_FilterStart()
+
+-- want to detect multiple aircraft withing 30km as a single group
+Detection = DETECTION_AREAS:New(DetectionSetGroup,30000)
+
+
+
+
+-- Iran's border zone
+Red_BorderZone = ZONE_POLYGON:NewFromGroupName("Red Border",GROUP:FindByName("Red Border"))
+
+
+
+
+--Tankers
+ 
+ 
+function launchTanker(SpawnTanker)
+  local Spawn_S3 = SPAWN:New(SpawnTanker):InitLimit(1,1)
+  Spawn_S3:InitRepeatOnLanding()
+  Spawn_S3:Spawn()
+end
+
+--Menu
+
+local Menu_CSG2 = MENU_COALITION:New(coalition.side.BLUE,"CSG-2")
+MENU_COALITION_COMMAND:New(coalition.side.BLUE,"Launch Arco",Menu_CSG2,launchTanker,"Arco")
