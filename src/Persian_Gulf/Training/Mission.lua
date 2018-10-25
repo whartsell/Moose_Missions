@@ -33,13 +33,14 @@ Red_A2ADDispatcher:SetEngageRadius(92600) -- 50nm engagement zone
 --Red_A2ADDispatcher:SetSquadronTakeoffFromRunway("Lar Drones")
 --Red_A2ADDispatcher:SetSquadronLandingAtRunway("Lar Drones")
 --
-Red_A2ADDispatcher:SetSquadron("Bandar AbbasSQ","Bandar Abbas Intl",{"Red Squadron F4"},4)
+Red_A2ADDispatcher:SetSquadron("Bandar AbbasSQ","Bandar Abbas Intl",{"Red Squadron F4"},6)
+Red_A2ADDispatcher:SetSquadronVisible("Bandar AbbasSQ")
+Red_A2ADDispatcher:SetSquadronFuelThreshold("Bandar AbbasSQ",0.46)
 Red_A2ADDispatcher:SetSquadronOverhead("Bandar AbbasSQ",1)
 Red_A2ADDispatcher:SetSquadronGrouping("Bandar AbbasSQ",2)
---Red_A2ADDispatcher:SetSquadronTakeoffFromRunway("Bandar AbbasSQ")
--- workaround for runway bug
-Red_A2ADDispatcher:SetDefaultTakeoffInAir("Bandar AbbasSQ") 
-Red_A2ADDispatcher:SetSquadronLandingAtRunway("Bandar AbbasSQ")
+Red_A2ADDispatcher:SetSquadronTakeoffFromParkingCold("Bandar AbbasSQ")
+Red_A2ADDispatcher:SetSquadronLandingAtEngineShutdown("Bandar AbbasSQ")
+
 
 -- without a cap zone and CAP defined (below) the squadron will do nothing
 -- CAP zones
@@ -51,7 +52,7 @@ CAPZoneBA = ZONE_POLYGON:NewFromGroupName("BandarAbbasCAP",GROUP:FindByName("Ban
 --Red_A2ADDispatcher:SetSquadronCapInterval("Lar Drones",2,30,30,1)
 Red_A2ADDispatcher:SetSquadronCap("Bandar AbbasSQ",CAPZoneBA,7620,7620,750,950,950,1800,"BARO")
 Red_A2ADDispatcher:SetSquadronCapInterval("Bandar AbbasSQ",1,30,30,1)
-Red_A2ADDispatcher:SetDisengageRadius(100000)
+--Red_A2ADDispatcher:SetDisengageRadius(100000)
 
 --Tankers and AWACS
 
