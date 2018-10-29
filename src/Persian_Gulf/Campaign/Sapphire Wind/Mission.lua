@@ -57,11 +57,11 @@ Red_A2ADDispatcher:SetSquadronCapInterval("Bandar AbbasSQ",1,30,30,1)
 --Tankers and AWACS
 
 local Spawn_Texaco = SPAWN:New("Texaco"):InitLimit(1,10)
-Spawn_Texaco:InitRepeat()
+Spawn_Texaco:InitRepeatOnShutdown()
 Spawn_Texaco:SpawnScheduled(30,0)
 
-local Spawn_Darkstar = SPAWN:New("Darkstar"):InitLimit(1,10)
-Spawn_Darkstar:InitRepeat()
+local Spawn_Darkstar = SPAWN:New("Darkstar"):InitLimit(1,0)
+Spawn_Darkstar:InitRepeatOnLanding()
 Spawn_Darkstar:Spawn()
 
 --Missile Trainer
