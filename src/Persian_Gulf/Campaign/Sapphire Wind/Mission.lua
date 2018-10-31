@@ -1,14 +1,69 @@
-local Spawn_Darkstar = SPAWN:New("Darkstar"):InitLimit(1,10)
-local Spawn_Stinger = SPAWN:New("Stinger 1"):InitLimit(2,10)
+local showDisplay = false
+---
+-- adding our EWR and SAM groups to the detection group
+DetectionSetGroup = SET_GROUP:New()
+DetectionSetGroup:FilterPrefixes({"EWR Red", "SAM Red"})
+DetectionSetGroup:_FilterStart()
 
+-- want to detect multiple aircraft withing 5nm as a single group
+Detection = DETECTION_AREAS:New(DetectionSetGroup,9260)
+
+Red_A2ADDispatcher = AI_A2A_DISPATCHER:New(Detection)
+
+-- enable the tactical display for debugging
+Red_A2ADDispatcher:SetTacticalDisplay( showDisplay )
+
+-- Iran's border zone
+Red_BorderZone = ZONE_POLYGON:NewFromGroupName("Red Border",GROUP:FindByName("Red Border"))
+
+-- Dispatcher setup
+-- border
+Red_A2ADDispatcher:SetBorderZone(Red_BorderZone)
+
+-- Engagement
+Red_A2ADDispatcher:SetEngageRadius(92600) -- 50nm engagement zone
+
+--Squadrons
+Red_A2ADDispatcher:SetSquadron("Bandar AbbasSQ","Bandar Abbas Intl",{"Red Squadron F4"},12)
+Red_A2ADDispatcher:SetSquadronOverhead("Bandar AbbasSQ",1)
+Red_A2ADDispatcher:SetSquadronGrouping("Bandar AbbasSQ",2)
+Red_A2ADDispatcher:SetSquadronTakeoffFromParkingHot("Bandar AbbasSQ")
+Red_A2ADDispatcher:SetSquadronLandingAtEngineShutdown("Bandar AbbasSQ")
+Red_A2ADDispatcher:SetSquadronVisible("Bandar AbbasSQ")
+-- without a cap zone and CAP defined (below) the squadron will do nothing
+-- CAP zones
+-- example
+-- Bamdar Abbas CAP is name of the helo group defining the cap zone.  it must be late activated
+CAPZoneBA = ZONE_POLYGON:NewFromGroupName("BandarAbbasCAP",GROUP:FindByName("BandarAbbasCAP"))
+Red_A2ADDispatcher:SetSquadronCap("Bandar AbbasSQ",CAPZoneBA,7620,7620,750,750,950,1800,"BARO")
+Red_A2ADDispatcher:SetSquadronCapInterval("Bandar AbbasSQ",1,30,30,1)
+Red_A2ADDispatcher:SetDisengageRadius(100000)
+
+function launchTanker(SpawnTanker)
+  local Spawn_S3 = SPAWN:New(SpawnTanker):InitLimit(1,1)
+  Spawn_S3:InitRepeatOnLanding()
+  Spawn_S3:Spawn()
+end
+
+function toggle_tacticalDisplay()
+  showDisplay = not (showDisplay)
+  Red_A2ADDispatcher:SetTacticalDisplay(showDisplay)
+end
+
+
+-- Launch and keep AWACS up
+local Spawn_Darkstar = SPAWN:New("Darkstar"):InitKeepUnitNames(true)
 
 function Launch_Darkstar()
   Spawn_Darkstar:Spawn()
 end
+SchedulerObject = SCHEDULER:New(Spawn_Darkstar,Launch_Darkstar,{},120)
 
-function Launch_Stinger()
-  Spawn_Stinger:Spawn()
-end
 
-SchedulerObject = SCHEDULER:New(Spawn_Darkstar,Launch_Darkstar,{},150)
---StingerScheduler = SCHEDULER:New(Spawn_Stinger,Launch_Stinger,{},300)
+
+--Menu
+local Menu_Debug = MENU_MISSION:New("Debug")
+local Menu_CSG1 = MENU_COALITION:New(coalition.side.BLUE,"CSG-1")
+
+MENU_MISSION_COMMAND:New("ToggleTacticalDisplay",Menu_Debug,toggle_tacticalDisplay)
+MENU_COALITION_COMMAND:New(coalition.side.BLUE,"Launch Arco",Menu_CSG1,launchTanker,"Arco")
